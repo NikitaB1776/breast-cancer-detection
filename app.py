@@ -3,18 +3,12 @@ import pandas as pd
 import numpy as np
 import pickle
 
-# ==============================
-# Page Configuration
-# ==============================
 st.set_page_config(
     page_title="Breast Cancer Detection",
     page_icon="🩺",
     layout="centered"
 )
 
-# ==============================
-# Load Model
-# ==============================
 @st.cache_resource
 def load_model():
     with open("breast_cancer_model.pkl", "rb") as file:
@@ -23,9 +17,6 @@ def load_model():
 
 model = load_model()
 
-# ==============================
-# Feature Names
-# ==============================
 FEATURES = [
     "ClumpThickness",
     "UniformityCellSize",
@@ -38,24 +29,15 @@ FEATURES = [
     "Mitoses"
 ]
 
-# ==============================
-# Title
-# ==============================
 st.title("🩺 Breast Cancer Detection")
 st.write("Machine Learning based early cancer prediction")
 st.write("---")
 
-# ==============================
-# Sidebar: Input Method
-# ==============================
 option = st.sidebar.radio(
     "Input Method",
     ("Manual Input", "Upload CSV File")
 )
 
-# ==============================
-# Manual Input
-# ==============================
 if option == "Manual Input":
     st.subheader("Enter Cell Features (1–10)")
 
@@ -75,9 +57,6 @@ if option == "Manual Input":
         else:
             st.success(f"✅ Benign Tumor Detected (Confidence: {max(probability)*100:.2f}%)")
 
-# ==============================
-# CSV Upload
-# ==============================
 else:
     st.subheader("Upload CSV File")
     uploaded_file = st.file_uploader("Upload CSV with 9 features", type=["csv"])
@@ -98,12 +77,11 @@ else:
             st.write("🧾 Prediction Results")
             st.dataframe(results)
 
-# ==============================
-# Disclaimer
-# ==============================
+
 st.write("---")
 st.markdown("""
 ⚠️ **Medical Disclaimer**  
 This application is for educational purposes only.  
 Not a substitute for professional medical advice.
 """)
+
